@@ -163,7 +163,7 @@
     </if>
   </update>
 
-
+  <!--防止userId查不到时返回的null赋值给int导致报错，使用IFNULL函数-->
   <select id="selectCartProductCount" parameterType="int" resultType="int">
     select IFNULL(sum(quantity),0) as count from mmall_cart where user_id = #{userId}
   </select>
