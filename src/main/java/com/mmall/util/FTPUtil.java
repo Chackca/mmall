@@ -47,11 +47,18 @@ public class FTPUtil {
                 ftpClient.setBufferSize(1024);
                 ftpClient.setControlEncoding("UTF-8");
                 ftpClient.setFileType(FTPClient.BINARY_FILE_TYPE);
-                ftpClient.enterLocalPassiveMode();
+                ftpClient.enterLocalPassiveMode();//每次数据连接之前，ftp client告诉ftp server开通一个端口来传输数据。
                 //ftpClient.setFileTransferMode(FTP.STREAM_TRANSFER_MODE);
                 for(File fileItem : fileList){
                     fis = new FileInputStream(fileItem);
+                    //uploaded = ftpClient.storeFile(new String(fileItem.getName().getBytes("UTF-8"),"iso-8859-1"),fis);
+                    //uploaded = ftpClient.storeFile(new String(fileItem.getName().getBytes("GBK"),"iso-8859-1"),fis);
+                    //ftpClient.setFileTransferMode(FTP.STREAM_TRANSFER_MODE);
+                    //ftpClient.execPROT("P");
+
                     uploaded = ftpClient.storeFile(fileItem.getName(),fis);
+                    System.out.println(ftpClient.getReplyCode());
+                    System.out.println(ftpClient.getReplyString());
                 }
 
             } catch (IOException e) {
