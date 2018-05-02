@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Created by geely
+ * 该cookieUtil为用户登录token服务
  */
 @Slf4j
 public class CookieUtil {
@@ -66,11 +66,5 @@ public class CookieUtil {
             }
         }
     }
-
-
-
-
-
-
 
 }
