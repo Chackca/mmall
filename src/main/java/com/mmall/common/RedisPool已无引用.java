@@ -8,7 +8,7 @@ import redis.clients.jedis.JedisPoolConfig;
 /**
  * Created by geely
  */
-public class RedisPool {
+public class RedisPool已无引用 {
     private static JedisPool pool;//jedis连接池
     private static Integer maxTotal = Integer.parseInt(PropertiesUtil.getProperty("redis.max.total","20")); //最大连接数
     private static Integer maxIdle = Integer.parseInt(PropertiesUtil.getProperty("redis.max.idle","20"));//在jedispool中最大的idle状态(空闲的)的jedis实例的个数
