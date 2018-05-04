@@ -9,9 +9,13 @@
      http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
      http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
 
+    <!--spring扫描包里的所有注解，但是不扫描@controller注解，将其交给MVC的DispatcherServlet来扫描-->
     <context:component-scan base-package="com.mmall" annotation-config="true">
         <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" />
     </context:component-scan>
+
+    <!--用这个配置来激活已经注册的Bean，使其可以工作-->
+    <!--<context:annotation-config/>-->
 
     <aop:aspectj-autoproxy/>
 
