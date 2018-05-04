@@ -28,7 +28,7 @@ public class CloseOrderTask {//实现定时关闭订单
     @Autowired
     private RedissonManager redissonManager;
 
-    @PreDestroy
+    @PreDestroy  //Tomcat在关闭之前，终止之前会调用这个方法，如果是kill Tomcat进程，则不会执行
     public void delLock(){
         RedisShardedPoolUtil.del(Const.REDIS_LOCK.CLOSE_ORDER_TASK_LOCK);
 
@@ -67,6 +67,7 @@ public class CloseOrderTask {//实现定时关闭订单
             closeOrder(Const.REDIS_LOCK.CLOSE_ORDER_TASK_LOCK);
         }else{
             //未获取到锁，继续判断，判断时间戳，看是否可以重置并获取到锁
+            //此处是为了应对可能存在的Tomcat被突然关闭，设置的redis的key的还没有来得及设置过时时间就结束进程了，导致redis的key永远存在
             String lockValueStr = RedisShardedPoolUtil.get(Const.REDIS_LOCK.CLOSE_ORDER_TASK_LOCK);
             if(lockValueStr != null && System.currentTimeMillis() > Long.parseLong(lockValueStr)){
                 String getSetResult = RedisShardedPoolUtil.getSet(Const.REDIS_LOCK.CLOSE_ORDER_TASK_LOCK,String.valueOf(System.currentTimeMillis()+lockTimeout));
@@ -74,7 +75,7 @@ public class CloseOrderTask {//实现定时关闭订单
                 //返回给定的key的旧值，->旧值判断，是否可以获取锁
                 //当key没有旧值时，即key不存在时，返回nil ->获取锁
                 //这里我们set了一个新的value值，获取旧的值。
-                if(getSetResult == null || (getSetResult != null && StringUtils.equals(lockValueStr,getSetResult))){
+                if(getSetResult == null || (getSetResult != null && StringUtils.equals(lockValueStr,getSetResult))){//双重检验
                     //真正获取到锁
                     closeOrder(Const.REDIS_LOCK.CLOSE_ORDER_TASK_LOCK);
                 }else{

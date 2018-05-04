@@ -23,10 +23,11 @@ public class RedisShardedPool {
     private static Boolean testOnBorrow = Boolean.parseBoolean(PropertiesUtil.getProperty("redis.test.borrow","true"));//在borrow一个jedis实例的时候，是否要进行验证操作，如果赋值true。则得到的jedis实例肯定是可以用的。
     private static Boolean testOnReturn = Boolean.parseBoolean(PropertiesUtil.getProperty("redis.test.return","true"));//在return一个jedis实例的时候，是否要进行验证操作，如果赋值true。则放回jedispool的jedis实例肯定是可以用的。
 
+    //在linux上已经配置为主从集群，所以只连接主redis即可
     private static String redis1Ip = PropertiesUtil.getProperty("redis1.ip");
     private static Integer redis1Port = Integer.parseInt(PropertiesUtil.getProperty("redis1.port"));
-    private static String redis2Ip = PropertiesUtil.getProperty("redis2.ip");
-    private static Integer redis2Port = Integer.parseInt(PropertiesUtil.getProperty("redis2.port"));
+    /*private static String redis2Ip = PropertiesUtil.getProperty("redis2.ip");
+    private static Integer redis2Port = Integer.parseInt(PropertiesUtil.getProperty("redis2.port"));*/
 //    private static String redis3Ip = PropertiesUtil.getProperty("redis3.ip");
 //    private static Integer redis3Port = Integer.parseInt(PropertiesUtil.getProperty("redis3.port"));
 //    private static String redis4Ip = PropertiesUtil.getProperty("redis4.ip");
@@ -52,7 +53,7 @@ public class RedisShardedPool {
         config.setBlockWhenExhausted(true);//连接耗尽的时候，是否阻塞，false会抛出异常，true阻塞直到超时。默认为true。
 
         JedisShardInfo info1 = new JedisShardInfo(redis1Ip,redis1Port,1000*2);
-        JedisShardInfo info2 = new JedisShardInfo(redis2Ip,redis2Port,1000*2);
+        //JedisShardInfo info2 = new JedisShardInfo(redis2Ip,redis2Port,1000*2);
 //        JedisShardInfo info3 = new JedisShardInfo(redis3Ip,redis3Port,1000*2);
 //        JedisShardInfo info4 = new JedisShardInfo(redis4Ip,redis4Port,1000*2);
 //        JedisShardInfo info5 = new JedisShardInfo(redis5Ip,redis5Port,1000*2);
@@ -62,7 +63,7 @@ public class RedisShardedPool {
         List<JedisShardInfo> jedisShardInfoList = new ArrayList<JedisShardInfo>(2);
 
         jedisShardInfoList.add(info1);
-        jedisShardInfoList.add(info2);
+        //jedisShardInfoList.add(info2);
 //        jedisShardInfoList.add(info3);
 //        jedisShardInfoList.add(info4);
 //        jedisShardInfoList.add(info5);
