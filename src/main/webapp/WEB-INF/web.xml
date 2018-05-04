@@ -25,6 +25,7 @@
 
 
     <!-- 二期新增重置session时间的filter -->
+    <!--通过分布式redis来解决session共享的解决方案-->
     <filter>
         <filter-name>sessionExpireFilter</filter-name>
         <filter-class>com.mmall.controller.common.SessionExpireFilter</filter-class>
@@ -35,6 +36,7 @@
     </filter-mapping>
 
 
+    <!--使用springSession的解决方案-->
     <!--<filter>-->
     <!--<filter-name>springSessionRepositoryFilter</filter-name>-->
     <!--<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>-->

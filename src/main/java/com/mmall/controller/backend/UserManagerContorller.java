@@ -20,7 +20,7 @@ public class UserManagerContorller {
     @Autowired
     private IUserService iUserService;
 
-    @RequestMapping(value = "login.do" ,method = RequestMethod.GET)
+    @RequestMapping(value = "login.do" ,method = RequestMethod.POST)
     @ResponseBody
     public ServerResponse<User> login(String username , String password, HttpSession session){
         ServerResponse<User> response = iUserService.login(username,password);
