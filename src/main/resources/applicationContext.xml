@@ -20,7 +20,9 @@
     <aop:aspectj-autoproxy/>
 
     <!-- 二期新增spring schedule的时候新增的 -->
+    <!--此配置可以使得从配置文件中读取的值在ide显示出来-->
     <context:property-placeholder location="classpath:datasource.properties"/>
+    <!--Spring Schedule-->
     <task:annotation-driven/>
 
 

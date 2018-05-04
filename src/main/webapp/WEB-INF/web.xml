@@ -73,7 +73,7 @@
     <!--<url-pattern>*.do</url-pattern>-->
     <!--</servlet-mapping>-->
 
-
+    <!--既不耽误原来的.do请求，同时可以使得restful生效-->
     <servlet-mapping>
         <servlet-name>dispatcher</servlet-name>
         <url-pattern>/</url-pattern>

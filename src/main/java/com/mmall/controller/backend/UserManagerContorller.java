@@ -31,7 +31,6 @@ public class UserManagerContorller {
                 session.setAttribute(Const.CURRENT_USER,user);
             }else{
                 return ServerResponse.createByErrorMessage("不是管理员无法登录");
-
             }
         }
         return response;

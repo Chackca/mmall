@@ -31,7 +31,7 @@ public class CategoryManagerController {
     public ServerResponse addCategory(HttpServletRequest httpServletRequest, String categoryName,
                                       @RequestParam(value = "parentId",defaultValue = "0") int parentId){
 
-        //将原本的从session中获取用户信息转换为从cookie中获取
+        /*//将原本的从session中获取用户信息转换为从cookie中获取
         String loginToken = CookieUtil.readLoginToken(httpServletRequest);//获取cookie中的值，其值在redis中表现为key
         if (StringUtils.isEmpty(loginToken)){
             return ServerResponse.createByErrorMessage("用户未登录，无法获取当前用户的信息");
@@ -46,13 +46,14 @@ public class CategoryManagerController {
             return iCategoryService.addCategory(categoryName,parentId);
         }else {
             return ServerResponse.createBySuccessMessage("无权限操作，请更换管理员权限");
-        }
+        }*/
+        return iCategoryService.addCategory(categoryName,parentId);
     }
 
     @RequestMapping("set_category_name.do")
     @ResponseBody
     public ServerResponse setCategoryName(HttpServletRequest httpServletRequest, Integer categoryId,String categoryName){
-        //将原本的从session中获取用户信息转换为从cookie中获取
+        /*//将原本的从session中获取用户信息转换为从cookie中获取
         String loginToken = CookieUtil.readLoginToken(httpServletRequest);//获取cookie中的值，其值在redis中表现为key
         if (StringUtils.isEmpty(loginToken)){
             return ServerResponse.createByErrorMessage("用户未登录，无法获取当前用户的信息");
@@ -66,14 +67,16 @@ public class CategoryManagerController {
 
         }else {
             return ServerResponse.createBySuccessMessage("无权限操作，请更换管理员权限");
-        }
+        }*/
+        return iCategoryService.updateCategoryName(categoryId,categoryName);
+
     }
 
     //平级子节点
     @RequestMapping("get_category.do")
     @ResponseBody
     public ServerResponse getChildrenParallelCategory(HttpServletRequest httpServletRequest, @RequestParam(value = "categoryId",defaultValue = "0")Integer categoryId){
-        //将原本的从session中获取用户信息转换为从cookie中获取
+        /*//将原本的从session中获取用户信息转换为从cookie中获取
         String loginToken = CookieUtil.readLoginToken(httpServletRequest);//获取cookie中的值，其值在redis中表现为key
         if (StringUtils.isEmpty(loginToken)){
             return ServerResponse.createByErrorMessage("用户未登录，无法获取当前用户的信息");
@@ -87,14 +90,16 @@ public class CategoryManagerController {
 
         }else {
             return ServerResponse.createBySuccessMessage("无权限操作，请更换管理员权限");
-        }
+        }*/
+        return iCategoryService.getChildrenCategory(categoryId);
+
     }
 
     //递归子节点
     @RequestMapping("get_deep_category.do")
     @ResponseBody
     public ServerResponse getCategoryAndDeepChildCategory(HttpServletRequest httpServletRequest, @RequestParam(value = "categoryId",defaultValue = "0")Integer categoryId){
-        //将原本的从session中获取用户信息转换为从cookie中获取
+        /*//将原本的从session中获取用户信息转换为从cookie中获取
         String loginToken = CookieUtil.readLoginToken(httpServletRequest);//获取cookie中的值，其值在redis中表现为key
         if (StringUtils.isEmpty(loginToken)){
             return ServerResponse.createByErrorMessage("用户未登录，无法获取当前用户的信息");
@@ -108,7 +113,9 @@ public class CategoryManagerController {
 
         }else {
             return ServerResponse.createBySuccessMessage("无权限操作，请更换管理员权限");
-        }
+        }*/
+        return iCategoryService.selectCategoryAndChildrenById(categoryId);
+
     }
 
 

@@ -67,7 +67,7 @@ public class ProductManagerController {
     @ResponseBody
     public ServerResponse setSaleStatus(HttpServletRequest httpServletRequest, Integer productId,Integer status){
         //将原本的从session中获取用户信息转换为从cookie中获取
-        String loginToken = CookieUtil.readLoginToken(httpServletRequest);//获取cookie中的值，其值在redis中表现为key
+        /*String loginToken = CookieUtil.readLoginToken(httpServletRequest);//获取cookie中的值，其值在redis中表现为key
         if (StringUtils.isEmpty(loginToken)){
             return ServerResponse.createByErrorMessage("用户未登录，无法获取当前用户的信息");
         }
@@ -83,13 +83,15 @@ public class ProductManagerController {
 
         }else {
             return ServerResponse.createByErrorMessage("无权限操作");
-        }
+        }*/
+        return iProductService.setSaleStatus(productId,status);
+
     }
 
     @RequestMapping(value = "detail.do")
     @ResponseBody
     public ServerResponse getDetail(HttpServletRequest httpServletRequest, Integer productId){
-        //将原本的从session中获取用户信息转换为从cookie中获取
+        /*//将原本的从session中获取用户信息转换为从cookie中获取
         String loginToken = CookieUtil.readLoginToken(httpServletRequest);//获取cookie中的值，其值在redis中表现为key
         if (StringUtils.isEmpty(loginToken)){
             return ServerResponse.createByErrorMessage("用户未登录，无法获取当前用户的信息");
@@ -107,7 +109,9 @@ public class ProductManagerController {
 
         }else {
             return ServerResponse.createByErrorMessage("无权限操作");
-        }
+        }*/
+        return iProductService.managerProductDetail(productId);
+
     }
 
     @RequestMapping(value = "list.do")
@@ -115,7 +119,7 @@ public class ProductManagerController {
     public ServerResponse getList(HttpServletRequest httpServletRequest,
                                   @RequestParam(value = "pageNum",defaultValue = "1") int pageNum,
                                   @RequestParam(value = "pageSize",defaultValue = "10") int pageSize){
-        //将原本的从session中获取用户信息转换为从cookie中获取
+        /*//将原本的从session中获取用户信息转换为从cookie中获取
         String loginToken = CookieUtil.readLoginToken(httpServletRequest);//获取cookie中的值，其值在redis中表现为key
         if (StringUtils.isEmpty(loginToken)){
             return ServerResponse.createByErrorMessage("用户未登录，无法获取当前用户的信息");
@@ -131,13 +135,15 @@ public class ProductManagerController {
             return iProductService.getProductList(pageNum,pageSize);
         }else{
             return ServerResponse.createByErrorMessage("无权限操作");
-        }
+        }*/
+        return iProductService.getProductList(pageNum,pageSize);
+
     }
 
     @RequestMapping(value = "search.do")
     @ResponseBody
     public ServerResponse productSearch(HttpServletRequest httpServletRequest,String productName,Integer productId, @RequestParam(value = "pageNum",defaultValue = "1") int pageNum,@RequestParam(value = "pageSize",defaultValue = "10") int pageSize){
-        //将原本的从session中获取用户信息转换为从cookie中获取
+        /*//将原本的从session中获取用户信息转换为从cookie中获取
         String loginToken = CookieUtil.readLoginToken(httpServletRequest);//获取cookie中的值，其值在redis中表现为key
         if (StringUtils.isEmpty(loginToken)){
             return ServerResponse.createByErrorMessage("用户未登录，无法获取当前用户的信息");
@@ -154,13 +160,14 @@ public class ProductManagerController {
             return iProductService.searchProduct(productName,productId,pageNum,pageSize);
         }else{
             return ServerResponse.createByErrorMessage("无权限操作");
-        }
+        }*/
+        return iProductService.searchProduct(productName,productId,pageNum,pageSize);
     }
 
     @RequestMapping(value = "upload.do")
     @ResponseBody
     public ServerResponse upload(HttpServletRequest httpServletRequest, @RequestParam(value = "upload_file",required = false) MultipartFile file, HttpServletRequest request){
-        //将原本的从session中获取用户信息转换为从cookie中获取
+        /*//将原本的从session中获取用户信息转换为从cookie中获取
         String loginToken = CookieUtil.readLoginToken(httpServletRequest);//获取cookie中的值，其值在redis中表现为key
         if (StringUtils.isEmpty(loginToken)){
             return ServerResponse.createByErrorMessage("用户未登录，无法获取当前用户的信息");
@@ -183,7 +190,15 @@ public class ProductManagerController {
             return ServerResponse.createBySuccess(fileMap);
         }else{
             return ServerResponse.createByErrorMessage("无权限操作");
-        }
+        }*/
+
+        String path = request.getSession().getServletContext().getRealPath("upload");
+        String targetFileName = iFileService.upload(file,path);
+        String url = PropertiesUtil.getProperty("ftp.server.http.prefix")+targetFileName;
+        Map fileMap = Maps.newHashMap();
+        fileMap.put("uri",targetFileName);
+        fileMap.put("url",url);
+        return ServerResponse.createBySuccess(fileMap);
     }
 
 
@@ -191,7 +206,7 @@ public class ProductManagerController {
     @RequestMapping(value = "richtext_img_upload.do")
     @ResponseBody
     public Map richtextImgUpload(HttpServletRequest httpServletRequest, @RequestParam(value = "upload_file",required = false) MultipartFile file, HttpServletRequest request, HttpServletResponse response){
-        Map resultMap = Maps.newHashMap();
+        /*Map resultMap = Maps.newHashMap();
 
         //将原本的从session中获取用户信息转换为从cookie中获取
         String loginToken = CookieUtil.readLoginToken(httpServletRequest);//获取cookie中的值，其值在redis中表现为key
@@ -232,7 +247,21 @@ public class ProductManagerController {
             resultMap.put("success",false);
             resultMap.put("msg","无权限操作");
             return resultMap;
+        }*/
+        Map resultMap = Maps.newHashMap();
+        String path = request.getSession().getServletContext().getRealPath("upload");
+        String targetFileName = iFileService.upload(file,path);
+        if(StringUtils.isBlank(targetFileName)){
+            resultMap.put("success",false);
+            resultMap.put("msg","上传失败");
+            return resultMap;
         }
+        String url = PropertiesUtil.getProperty("ftp.server.http.prefix")+targetFileName;
+        resultMap.put("success",true);
+        resultMap.put("msg","上传成功");
+        resultMap.put("file_path",url);
+        response.addHeader("Access-Control-Allow-Headers","X-File-Name");
+        return resultMap;
     }
 
 }
