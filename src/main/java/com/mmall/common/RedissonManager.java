@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 
 /**
- * Created by geely
+ * Created by Chackca
  */
 @Component
 @Slf4j
@@ -25,8 +25,8 @@ public class RedissonManager {
 
     private static String redis1Ip = PropertiesUtil.getProperty("redis1.ip");
     private static Integer redis1Port = Integer.parseInt(PropertiesUtil.getProperty("redis1.port"));
-    private static String redis2Ip = PropertiesUtil.getProperty("redis2.ip");
-    private static Integer redis2Port = Integer.parseInt(PropertiesUtil.getProperty("redis2.port"));
+    /*private static String redis2Ip = PropertiesUtil.getProperty("redis2.ip");
+    private static Integer redis2Port = Integer.parseInt(PropertiesUtil.getProperty("redis2.port"));*/
 
     @PostConstruct //构造器完成之后执行这个方法
     private void init(){

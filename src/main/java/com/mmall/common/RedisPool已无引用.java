@@ -6,7 +6,7 @@ import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 
 /**
- * Created by geely
+ * Created by Chackca
  */
 public class RedisPool已无引用 {
     private static JedisPool pool;//jedis连接池
@@ -58,7 +58,7 @@ public class RedisPool已无引用 {
 
     public static void main(String[] args) {
         Jedis jedis = pool.getResource();
-        jedis.set("geelykey","geelyvalue");
+        jedis.set("Chackcakey","Chackcavalue");
         returnResource(jedis);
 
         pool.destroy();//临时调用，销毁连接池中的所有连接

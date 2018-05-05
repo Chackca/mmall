@@ -130,7 +130,7 @@ public class JsonUtil {
 
 //        User user = new User();
 //        user.setId(2);
-//        user.setEmail("geely@happymmall.com");
+//        user.setEmail("Chackca@happymmall.com");
 //        user.setCreateTime(new Date());
 //        String userJsonPretty = JsonUtil.obj2StringPretty(user);
 //        log.info("userJson:{}",userJsonPretty);
@@ -138,7 +138,7 @@ public class JsonUtil {
 
 //        User u2 = new User();
 //        u2.setId(2);
-//        u2.setEmail("geelyu2@happymmall.com");
+//        u2.setEmail("Chackcau2@happymmall.com");
 //
 //
 //

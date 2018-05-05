@@ -11,7 +11,7 @@ import java.sql.Timestamp;
 import java.util.Date;
 
 /**
- * Created by geely on mmall.
+ * Created by Chackca on mmall.
  */
 public class DaoTest extends TestBase {
 
@@ -23,7 +23,7 @@ public class DaoTest extends TestBase {
     public void testDao(){
         User a = new User();
         a.setPassword("111");
-        a.setUsername("aaaaageely");
+        a.setUsername("aaaaaChackca");
         a.setRole(0);
         a.setCreateTime(new Date());
         a.setUpdateTime(new Timestamp(System.currentTimeMillis()));

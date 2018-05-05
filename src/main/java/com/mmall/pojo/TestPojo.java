@@ -1,7 +1,7 @@
 package com.mmall.pojo;
 
 /**
- * Created by geely
+ * Created by Chackca
  */
 public class TestPojo {
     private String name;
