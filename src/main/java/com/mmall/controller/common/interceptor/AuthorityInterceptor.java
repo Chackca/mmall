@@ -82,7 +82,7 @@ public class AuthorityInterceptor implements HandlerInterceptor{
             PrintWriter out = response.getWriter();
 
             //上传由于富文本的控件要求，要特殊处理返回值，这里面区分是否登录以及是否有权限
-                if(user == null){
+            if(user == null){
                 if(StringUtils.equals(className,"ProductManageController") && StringUtils.equals(methodName,"richtextImgUpload")){
                     Map resultMap = Maps.newHashMap();
                     resultMap.put("success",false);

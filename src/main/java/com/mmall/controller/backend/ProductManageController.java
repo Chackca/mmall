@@ -26,8 +26,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
 @Controller
-@RequestMapping("/manager/product")
-public class ProductManagerController {
+@RequestMapping("/manage/product")
+public class ProductManageController {
 
     @Autowired
     private IUserService iUserService;

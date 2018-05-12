@@ -93,7 +93,8 @@ public class CloseOrderTask {//实现定时关闭订单
         RLock lock = redissonManager.getRedisson().getLock(Const.REDIS_LOCK.CLOSE_ORDER_TASK_LOCK);
         boolean getLock = false;
         try {
-            if(getLock = lock.tryLock(0,50, TimeUnit.SECONDS)){
+            //参数解释：获取不到锁的时候等待的时间，锁被持有的最长时间（实际业务执行完便释放了），前面设置的值的单位
+            if(getLock = lock.tryLock(0,5, TimeUnit.SECONDS)){
                 log.info("Redisson获取到分布式锁:{},ThreadName:{}", Const.REDIS_LOCK.CLOSE_ORDER_TASK_LOCK,Thread.currentThread().getName());
                 int hour = Integer.parseInt(PropertiesUtil.getProperty("close.order.task.time.hour","2"));
 //                iOrderService.closeOrder(hour);
@@ -115,7 +116,7 @@ public class CloseOrderTask {//实现定时关闭订单
 
 
     private void closeOrder(String lockName){
-        RedisShardedPoolUtil.expire(lockName,5);//有效期50秒，防止死锁
+        RedisShardedPoolUtil.expire(lockName,5);//有效期5秒，防止死锁
         log.info("获取{},ThreadName:{}", Const.REDIS_LOCK.CLOSE_ORDER_TASK_LOCK,Thread.currentThread().getName());
         int hour = Integer.parseInt(PropertiesUtil.getProperty("close.order.task.time.hour","2"));
         iOrderService.closeOrder(hour);
